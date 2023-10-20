@@ -4,8 +4,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+from fasting_app.core.models import AuditableModel
 
-class FastingSession(TimeStampedModel):
+
+class FastingSession(AuditableModel, TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('User'), related_name='fasting_sessions',
                              on_delete=models.PROTECT)
     start_date = models.DateTimeField(_('Start date'))
