@@ -76,6 +76,33 @@ celery -A config.celery_app worker -B -l info
 
 The following details how to deploy this application.
 
+# Short cuts
+
+```shell
+#Docker commands
+export DOCKER_USER="$(id -u):$(id -g)"
+alias d-build='docker stop $(docker ps -q -a) && docker-compose -f local.yml build'
+alias d-arg-build='docker stop $(docker ps -q -a) && docker-compose -f local.yml build --build-arg PYPI_TOKEN=${PYPI_TOKEN}'
+alias d-up='docker stop $(docker ps -q -a) && docker-compose -f local.yml up'
+alias d-manage='docker stop $(docker ps -q -a) && docker-compose -f local.yml run django python manage.py'
+alias d-django-exec="docker exec -it $(docker ps | grep local_django | awk '{print  $1 " bash"}' )"
+alias d-superuser='docker stop $(docker ps -qa) && docker-compose -f local.yml run django python manage.py createsuperuser --username="luiscberrocal" --email="luis.berrocal@payjoy.com"'
+alias gpt="git push --tag"
+d-bash-django() { docker exec -it $(docker ps | grep django | awk '{print $1}') bash }
+d-stop() { docker stop $(docker ps -a -q); }
+ 
+# Python commands
+alias pi='pip install'
+alias bppa='bump2version patch'
+alias bpmi='bump2version minor'
+alias bpma='bump2version major'
+alias relpa='bump2version patch --list --dry-run --allow-dirty | grep new_version | grep -E -o "[0-9]+.[0-9]+.[0-9]+$" | xargs git flow release start '
+alias relmi='bump2version minor --list --dry-run --allow-dirty | grep new_version | grep -E -o "[0-9]+.[0-9]+.[0-9]+$" | xargs git flow release start '
+alias relma='bump2version major --list --dry-run --allow-dirty | grep new_version | grep -E -o "[0-9]+.[0-9]+.[0-9]+$" | xargs git flow release start '
+alias hotfix='bump2version patch --list --dry-run --allow-dirty | grep new_version | grep -E -o "[0-9]+.[0-9]+.[0-9]+$" | xargs git flow hotfix start '
+
+```
+
 ### Docker
 
 See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
