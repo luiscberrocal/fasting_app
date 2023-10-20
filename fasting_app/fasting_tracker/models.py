@@ -5,8 +5,10 @@ from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
 from fasting_app.core.models import AuditableModel
+from fasting_app.fasting_tracker.managers import FastingSessionManager
 
-from fasting_app.fasting_app.fasting_tracker.managers import FastingSessionManager
+
+# from fasting_app.fasting_app.fasting_tracker.managers import FastingSessionManager
 
 
 class FastingSession(AuditableModel, TimeStampedModel):
